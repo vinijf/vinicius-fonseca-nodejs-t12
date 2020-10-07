@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Vinicius Fonseca · Node.js</title>
+  <link href="https://startbootstrap.github.io/startbootstrap-blog-post/vendor/bootstrap/css/bootstrap.min.css"
+    rel="stylesheet"> <!-- Custom styles for this template -->
+  <link href="https://startbootstrap.github.io/startbootstrap-blog-post/css/blog-post.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/artigos">Vinicius Fonseca</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Artigos <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/sugestoes">Sugestões <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/usuarios">Usuários <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-lg-10">
+        <% if (artigo) { %>
+        <!-- Title -->
+        <h1 class="mt-4"><%= artigo.titulo %></h1> <!-- Author -->
+        <p class="lead"> Autor: <%= artigo.autor %></p>
+        <hr> <!-- Preview Image --> <img class="img-fluid rounded" src="/uploads/<%= artigo.imagem %>" alt="" width=900>
+        <hr> <!-- Post Content -->
+        <%= artigo.texto %>
+        <hr> <!-- Comments Form -->
+
+        <div class="card my-4">
+          <h5 class="card-header">Deixe um Comentário:</h5>
+          <div class="card-body">
+            <form action="/comentario/<%= artigo.id %>" method="POST">
+              <div class="form-group">
+                <input type="text" class="form-control" id="autor" name="autor" placeholder="Autor">
+              </div>
+              <div class="form-group">
+                 <textarea required class="form-control" rows="3" id="texto" name="texto" placeholder="Texto"></textarea> 
+              </div> 
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+          </div>
+        </div> <!-- Single Comment -->
+        <% } %>
+        <% comentarios.map(comentarios => { %>
+        <div class="media mb-4"> <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0"><%= comentarios.autor %></h5>
+            <%= comentarios.texto %> 
+          </div>
+        </div>
+        <% }); %>
+        <!-- Comment with nested comments -->
+      </div>
+    </div> <!-- /.row -->
+  </div> <!-- /.container -->
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Vinicius Fonseca &copy; Node.js 2020</p>
+    </div> <!-- /.container -->
+  </footer> <!-- Bootstrap core JavaScript -->
+  <script src="https://startbootstrap.github.io/startbootstrap-blog-post/vendor/jquery/jquery.min.js"></script>
+  <script
+    src="https://startbootstrap.github.io/startbootstrap-blog-post/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

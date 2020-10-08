@@ -17,7 +17,7 @@ module.exports = (app) => {
             let usuario = new usuariosModel(req.body)
             usuario.senha = await app.utils.encryption.criptografar(usuario.senha)
             if(await usuario.save()){
-                res.send(`Usuário adicionado com sucesso - Id: ${usuario.id}`);
+                res.redirect("/usuarios")
             } else {
                 res.status(500).send("Erro ao adicionar usuário")
             }
@@ -31,7 +31,7 @@ module.exports = (app) => {
 
             let usuario = await usuariosModel.findOne({ _id })
             if(usuario)
-                res.json(usuario);
+                res.render("editar_usuario", {usuario});
             else
                 res.status(404).end()   
         } catch (error) {
@@ -48,7 +48,7 @@ module.exports = (app) => {
                 usuario.senha = await app.utils.encryption.criptografar(req.body.senha)
 
             if(await usuario.save())
-                res.send("Usuário atualizado com sucesso!")
+                res.redirect("/usuarios")
             else
                res.status(500).send("Erro ao atualizar usuário")
         } catch (error) {
@@ -59,7 +59,7 @@ module.exports = (app) => {
         try {
             let id = req.params.id
             if(await usuariosModel.findByIdAndRemove(id))
-                res.send("Usuário excluído com sucesso!")
+                res.redirect("/usuarios")
             else
                 res.status(500).send("Não foi possível excluir usuário")   
         } catch (error) {
@@ -76,9 +76,9 @@ module.exports = (app) => {
             
             let usuario = await usuariosModel.findOne({ email })
             if(!usuario)
-                res.status(404).send("Usuário não encontrado")
+                res.status(404).render("login_erro")
             else if(! await app.utils.encryption.validar(senha, usuario.senha))
-                res.status(404).send("Senha inválida")
+                res.status(404).render("login_erro")
             else {
                 let payload = {
                     id: usuario._id,

@@ -5,9 +5,9 @@ module.exports = app => {
         } else {
 
             let token =  req.cookies['token']
-            
+
             if(!token)
-                res.status(401).send("Faltou enviar o token")
+                res.redirect('/login')
             else {
                 app.get("jwt").verify(token, process.env.JWT_CHAVE_PRIVADA, (err, decoded) => {
                     if(err)

@@ -32,7 +32,7 @@ module.exports = function(app) {
                     if(err)
                         res.status(500).send(`Erro ao inserir: ${err}`)
                     else
-                        res.redirect('/artigos');
+                        res.redirect('/');
                 });
             } catch (error) {
                 res.send("Eror ao adicionar artigo: " + error);
@@ -80,7 +80,7 @@ module.exports = function(app) {
                 if(err)
                     res.status(500).send(`Erro ao atualizar artigo: ${err}`)
                 else
-                    res.send("Artigo atualizado com sucesso")
+                    res.redirect("/")
             })
         },
         Destroy: (req, res) => {
@@ -89,7 +89,7 @@ module.exports = function(app) {
                 if(err)
                     res.status(500).send(`Erro ao excluir artigo: ${err}`)
                 else
-                    res.redirect("/artigos")
+                    res.redirect("/")
             })
         }
     }

@@ -58,7 +58,7 @@ module.exports = function (app) {
                 if (err)
                     res.status(500).send(`Erro ao atualizar sugestão: ${err}`)
                 else
-                    res.send("sugestao atualizado com sucesso")
+                    res.redirect("/sugestoes")
             })
         },
         Destroy: (req, res) => {

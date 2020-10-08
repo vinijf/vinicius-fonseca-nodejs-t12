@@ -3,7 +3,16 @@ module.exports = app => {
         if(req.originalUrl == "/login" || req.originalUrl == "/adicionar/usuario"){
             next()
         } else {
-            let token = req.headers.token
+            var get_cookies = function(req) {
+                var cookies = {};
+                req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
+                  var parts = cookie.match(/(.*?)=(.*)$/)
+                  cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+                });
+                return cookies;
+              };
+            let token = get_cookies(req)['token']
+
             if(!token)
                 res.status(401).send("Faltou enviar o token")
             else {

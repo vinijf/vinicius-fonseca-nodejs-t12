@@ -7,7 +7,7 @@ module.exports = (app) => {
 
     usuariosController.listarUsuarios = async (req, res) => {
         let usuarios = await usuariosModel.find({})
-        res.json(usuarios)
+        res.render("listar_usuarios", {usuarios})
     }
     usuariosController.cadastrar = async (req, res) => {
         res.render("adicionar_usuario")
@@ -86,10 +86,9 @@ module.exports = (app) => {
                 }
                 let token = app.get("jwt").sign(payload, process.env.JWT_CHAVE_PRIVADA, { expiresIn: 60 * 60 * 24 })
 
-                res.json({
-                    token,
-                    usuario
-                })
+                res.cookie('token', token);
+
+                res.redirect('/')
             }
         } catch (error) {
             res.status(500).send(`Erro ao realizar login: ${error}`)
